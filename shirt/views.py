@@ -12,6 +12,7 @@ class ShirtViewSet(GenericViewSet):
 
     queryset = Shirt.objects.all()
     serializer_class = ShirtSerializer
+    lookup_field = 'id'
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
