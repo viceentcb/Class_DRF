@@ -19,6 +19,7 @@ class Shirt(TimestampedModel):
     class Meta:
         verbose_name = "T-Shirt"
         verbose_name_plural = "TShirts"
+        ordering = ["-created_at"]
 
     def __str__(self):
         return f"{self.name}"
