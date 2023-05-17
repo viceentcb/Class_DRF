@@ -7,10 +7,20 @@ from django.db import models
 # proof class imports
 from utils.models import TimestampedModel
 
+RED = 'red'
+BLUE = 'BLUE'
+GREEN = 'GREEN'
+
+COLOR_CHOICES = (
+    (RED, 'Red'),
+    (BLUE, 'Blue'),
+    (GREEN, 'Green'),
+)
+
 
 class Shirt(TimestampedModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    color = models.CharField(max_length=50)
+    color = models.CharField(max_length=50, choices=COLOR_CHOICES)
     stock = models.IntegerField()
     phrase = models.CharField(max_length=100)
     emoji = models.CharField(max_length=10)

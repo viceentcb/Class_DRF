@@ -10,3 +10,11 @@ class ShirtSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shirt
         fields = "__all__"
+
+
+class UpdateShirtSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Shirt
+        fields = "__all__"
+        read_only_fields = ["id", "color", "phrase", "emoji"]
