@@ -5,6 +5,7 @@ from django.urls import path
 # proof class import
 from .views import MasterDataAPIView
 
+
 router = SimpleRouter()
 
 urlpatterns = [

@@ -5,7 +5,7 @@ import uuid
 from django.db import models
 
 # proof class imports
-from utils.models import TimestampedModel
+from utils.models import BaseModel
 
 
 class ColorType(models.TextChoices):
@@ -21,7 +21,7 @@ class ColorType(models.TextChoices):
         return {choice.value: choice.label for choice in cls}
 
 
-class Shirt(TimestampedModel):
+class Shirt(BaseModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     color = models.CharField(max_length=50, choices=ColorType.choices)
     stock = models.IntegerField()
