@@ -36,3 +36,15 @@ class Shirt(BaseModel):
 
     def __str__(self):
         return f"{self.name}"
+
+
+"""
+dsmdaomdsmas
+çñsfmdfa
+sfd
+fad
+ds
+f
+ds
+d
+"""
