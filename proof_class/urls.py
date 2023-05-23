@@ -24,5 +24,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     url('api/', include('shirt.urls')),
+    url('api/', include('authentication.urls')),
     url('api/', include('utils.urls')),
 ]

@@ -12,5 +12,5 @@ class ShirtAdmin(admin.ModelAdmin):
         return self.model.all_objects.get_queryset()
 
     list_display = ('name', 'color', 'phrase', 'emoji', 'created_at', 'updated_at', 'deleted_at', 'active')
-    list_filter = ('color', 'stock')
+    list_filter = ('color', 'stock', 'active')
     search_fields = ('name', 'phrase', 'emoji')
