@@ -29,18 +29,6 @@ class TelevisionSerializer(serializers.ModelSerializer):
 
 class NeveraSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Television
+        model = Nevera
         fields = "__all__"
 
-    def create(self, data):
-        nevera = Nevera(anchura="5",
-                        altura="2",
-                        color="negro")
-        nevera.save()
-        return nevera
-
-    def update(self, instance, validated_data): #Patch
-        instance.altura = validated_data["altura"]
-        instance.color = validated_data["color"]
-        instance.anchura = validated_data["anchura"]
-        instance.save()
