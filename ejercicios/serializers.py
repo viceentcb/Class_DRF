@@ -2,7 +2,7 @@
 from rest_framework import serializers
 
 # proof class imports
-from ejercicios.models import Television
+from ejercicios.models import Television, Nevera
 
 
 class TelevisionSerializer(serializers.ModelSerializer):
@@ -11,32 +11,36 @@ class TelevisionSerializer(serializers.ModelSerializer):
         model = Television
         fields = "__all__"
 
+    def create(self, validated_data):
+        television = Television(**validated_data)
+        television.save()
 
-    def create(self, data):
-        Television(**data)
-        Television.save()
+        return television
 
-    def update(self, data):  #PUT
+    def update(self, instance, validated_data):  #PUT
 
-        objeto.pulgadas = data["pulgadasa"]
-        objeto.numero_de_serie = "numero_de_serie"
+        instance.pulgadas = validated_data["pulgadas"]
+        instance.numero_de_serie = validated_data["numero_de_serie"]
 
-        objeto.save()
+        instance.save(update_fields=["pulgadas", "numero_de_serie"])
+
+        return instance
 
 
-
-class TelevisionSerializer(serializers.ModelSerializer):
+class NeveraSerializer(serializers.ModelSerializer):
     class Meta:
         model = Television
         fields = "__all__"
 
     def create(self, data):
-        Nevera(anchura="5", altura="2", color="negro")
-        Nevera.save()
+        nevera = Nevera(anchura="5",
+                        altura="2",
+                        color="negro")
+        nevera.save()
+        return nevera
 
-    def update(self, data): #Patch
-        objeto.altura = data["altura"]
-        objeto.color = "color"
-        objeto.anchura = "anchura"
-
-        objeto.save("anchura", "altura")
+    def update(self, instance, validated_data): #Patch
+        instance.altura = validated_data["altura"]
+        instance.color = validated_data["color"]
+        instance.anchura = validated_data["anchura"]
+        instance.save()
