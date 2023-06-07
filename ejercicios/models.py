@@ -20,7 +20,8 @@ class Nevera(BaseModel):
     altura = models.DecimalField(max_digits=5, decimal_places=2)
     color = models.CharField(max_length=50)
     nombre = models.CharField(max_length=100, default="Proof")
-    marca = models.CharField(max_length=100, default="Bosh")
+    marca = models.CharField(max_length=100, null=True, blank=True)
+    vendido = models.BooleanField(null=True, blank=True)
 
     def __str__(self):
         return f"Nevera de color {self.color}"
