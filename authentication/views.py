@@ -36,24 +36,30 @@ class UserViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, GenericViewS
     serializer_class = UserProfileSerializer
     lookup_field = "first_name"
 
-    @action(detail=True, methods=['PUT', 'PATCH', 'DELETE'])
+    @action(detail=False, methods=['PUT', 'PATCH', 'GET', 'DELETE'])
     def me(self, request):
 
         if request.method in ('PUT', 'PATCH'):
-            instance = selg.get_object
+            instance = request.user
             serializer = self.get_serializer(instance, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
             serializer.save()
 
             return Response(serializer.data)
 
-        elif request.method == "GET":
-
-            instance = selg.get_object
+        elif request.method == 'GET':
+            instance = request.user
             serializer = self.get_serializer(instance)
+
             return Response(serializer.data)
 
+        elif request.method == 'DELETE':
+            instance = request.user
+            instance.delete()
+
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
     def get_serializer_class(self):
-        if self.action == "me":
-            return self.serializer_class
-        return UserSerializer
+        if self.action == 'me':
+            return UserSerializer
+        return self.serializer_class

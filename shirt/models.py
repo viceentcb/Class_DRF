@@ -6,6 +6,7 @@ from django.db import models
 
 # proof class imports
 from utils.models import BaseModel
+from authentication.models import User
 
 
 class ColorType(models.TextChoices):
@@ -28,6 +29,7 @@ class Shirt(BaseModel):
     phrase = models.CharField(max_length=100)
     emoji = models.CharField(max_length=10)
     name = models.CharField(max_length=20)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "T-Shirt"

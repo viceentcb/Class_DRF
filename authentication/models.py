@@ -42,4 +42,5 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
         ordering = ["-created_at"]
 
     def __str__(self):
-        return f"{self.first_name} {self.first_name}"
+        return f"{self.email}"
+
