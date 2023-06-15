@@ -11,6 +11,15 @@ class ListShirtSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Shirt
+        exclude = ["created_at", "updated_at", "deleted_at", "active"]
+
+
+class ListProfileShirtSerializer(serializers.ModelSerializer):
+
+    color = serializers.ChoiceField(choices=ColorType.choices, source='get_color_display')
+
+    class Meta:
+        model = Shirt
         fields = "__all__"
 
 
