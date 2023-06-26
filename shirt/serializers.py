@@ -3,11 +3,13 @@ from rest_framework import serializers
 
 # proof class imports
 from .models import Shirt, ColorType
+from authentication.serializers import UserProfileSerializer
 
 
 class ListShirtSerializer(serializers.ModelSerializer):
 
     color = serializers.ChoiceField(choices=ColorType.choices, source='get_color_display')
+    user_id = UserProfileSerializer()
 
     class Meta:
         model = Shirt
@@ -15,6 +17,7 @@ class ListShirtSerializer(serializers.ModelSerializer):
 
 
 class ListProfileShirtSerializer(serializers.ModelSerializer):
+    user_id = UserProfileSerializer()
 
     color = serializers.ChoiceField(choices=ColorType.choices, source='get_color_display')
 
