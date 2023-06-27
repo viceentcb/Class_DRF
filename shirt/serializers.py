@@ -18,10 +18,11 @@ class ListShirtSerializer(serializers.ModelSerializer):
         exclude = ["created_at", "updated_at", "deleted_at", "active"]
 
     def get_is_favorite(self, obj):
-        return self.context["request"].user.is_favorite(obj)
+        return obj.is_favorite(self.context["request"].user)
 
     def get_favorites(self, obj):
         return obj.favorites()
+
 
 class ListProfileShirtSerializer(serializers.ModelSerializer):
     user_id = UserProfileSerializer()

@@ -44,15 +44,15 @@ class ShirtViewSet(mixins.CreateModelMixin,
         return self.serializer_class
 
     @action(detail=True, methods=['POST'])
-    def favorite(self, request, id=None):
+    def favorite(self, request, id):
         shirt = self.get_object()
-        request.user.favorite(shirt)
+        self.request.user.do_favorite(shirt)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(detail=True, methods=['POST'])
-    def unfavorite(self, request, id=None):
+    def unfavorite(self, request, id):
         shirt = self.get_object()
-        request.user.unfavorite(shirt)
+        self.request.user.do_unfavorite(shirt)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 

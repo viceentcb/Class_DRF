@@ -49,11 +49,8 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return f"{self.email}"
 
-    def favorite(self, shirt):
+    def do_favorite(self, shirt):
        self.favorites.add(shirt)
 
-    def unfavorite(self, shirt):
+    def do_unfavorite(self, shirt):
        self.favorites.remove(shirt)
-
-    def is_favorite(self, shirt):
-        return self.favorites.filter(pk=shirt.id).exists()
