@@ -34,6 +34,11 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
         related_query_name='user_custom'
     )
 
+    favorites = models.ManyToManyField(
+        "shirt.Shirt",
+        related_name="favorites_by"
+    )
+
     USERNAME_FIELD = 'email'
 
     class Meta:
@@ -44,3 +49,11 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return f"{self.email}"
 
+    def favorite(self, shirt):
+       self.favorites.add(shirt)
+
+    def unfavorite(self, shirt):
+       self.favorites.remove(shirt)
+
+    def is_favorite(self, shirt):
+        return self.favorites.filter(pk=shirt.id).exists()

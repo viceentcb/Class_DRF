@@ -10,11 +10,18 @@ class ListShirtSerializer(serializers.ModelSerializer):
 
     color = serializers.ChoiceField(choices=ColorType.choices, source='get_color_display')
     user_id = UserProfileSerializer()
+    is_favorite = serializers.SerializerMethodField()
+    favorites = serializers.SerializerMethodField()
 
     class Meta:
         model = Shirt
         exclude = ["created_at", "updated_at", "deleted_at", "active"]
 
+    def get_is_favorite(self, obj):
+        return self.context["request"].user.is_favorite(obj)
+
+    def get_favorites(self, obj):
+        return obj.favorites()
 
 class ListProfileShirtSerializer(serializers.ModelSerializer):
     user_id = UserProfileSerializer()

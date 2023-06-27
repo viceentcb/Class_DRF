@@ -38,3 +38,7 @@ class Shirt(BaseModel):
 
     def __str__(self):
         return f"{self.name}"
+
+    def favorites(self):
+        return self.favorites_by.count()
+

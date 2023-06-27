@@ -1,7 +1,7 @@
 # Django and DRF imports
-import django_filters
 from rest_framework import status, mixins
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
@@ -23,6 +23,13 @@ class ShirtViewSet(mixins.CreateModelMixin,
     serializer_class = ListShirtSerializer
     lookup_field = "id"
 
+    def get_permissions(self):
+        if self.action == 'create':
+            permission_classes = [IsAuthenticated]
+        else:
+            permission_classes = [AllowAny]
+        return [permission() for permission in permission_classes]
+
     def create(self, request, *args, **kwargs):
         request.data['user_id'] = request.user.id
         serializer = self.get_serializer(data=request.data)
@@ -35,6 +42,18 @@ class ShirtViewSet(mixins.CreateModelMixin,
         if self.action == "create":
             return CreateShirtSerializer
         return self.serializer_class
+
+    @action(detail=True, methods=['POST'])
+    def favorite(self, request, id=None):
+        shirt = self.get_object()
+        request.user.favorite(shirt)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @action(detail=True, methods=['POST'])
+    def unfavorite(self, request, id=None):
+        shirt = self.get_object()
+        request.user.unfavorite(shirt)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class MeShirtView(mixins.UpdateModelMixin, mixins.DestroyModelMixin, mixins.ListModelMixin, GenericViewSet):
