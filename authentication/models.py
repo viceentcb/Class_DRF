@@ -39,6 +39,12 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
         related_name="favorites_by"
     )
 
+    comments = models.ManyToManyField(
+        "shirt.Shirt",
+        related_name="comment_by",
+        through="Comment"
+    )
+
     USERNAME_FIELD = 'email'
 
     class Meta:
@@ -54,3 +60,12 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
 
     def do_unfavorite(self, shirt):
        self.favorites.remove(shirt)
+
+
+class Comment(BaseModel):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    shirt = models.ForeignKey('shirt.Shirt', on_delete=models.CASCADE)
+    text = models.CharField(max_length=200)
+
+    class Meta:
+        unique_together = [['user', 'shirt', 'text']]

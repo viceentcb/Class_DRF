@@ -24,7 +24,7 @@ class ShirtViewSet(mixins.CreateModelMixin,
     lookup_field = "id"
 
     def get_permissions(self):
-        if self.action == 'create':
+        if self.action in ('create', 'favorite', 'unfavorite'):
             permission_classes = [IsAuthenticated]
         else:
             permission_classes = [AllowAny]
